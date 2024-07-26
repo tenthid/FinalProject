@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redis;
 
 class UserController extends Controller
 {
@@ -94,12 +93,6 @@ class UserController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json(['message' => 'logout berhasil'], 200);
-    }
-
-    public function halo(Request $request) {
-        return response()->json([
-            $request
-        ]);
     }
 
     public function forgotPassword(Request $request)
