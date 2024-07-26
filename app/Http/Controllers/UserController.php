@@ -95,7 +95,6 @@ class UserController extends Controller
         }   
 
         $request->user()->currentAccessToken()->delete();
-        echo "test";
 
         return response()->json(['message' => 'logout berhasil'], 200);
     }
