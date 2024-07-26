@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redis;
 
 class UserController extends Controller
 {
@@ -85,26 +84,18 @@ class UserController extends Controller
 
         $token = $user->createToken("tokenName")->plainTextToken;
         
+        echo "helo there";
+
         return response()->json(['data' => [
             'token' => $token
         ]]);
     }
 
     public function logout(Request $request) {
-        if(!$request->user()->currentAccessToken()) {
-            return response()->json(['message' => 'ga ada token bejir'], 401);
-        }   
-
         $request->user()->currentAccessToken()->delete();
 
         return response()->json(['message' => 'logout berhasil'], 200);
     }
-
-    public function halo(Request $request) {
-        return response()->json([
-            $request
-        ]);
-    }   
 
     public function forgotPassword(Request $request)
     {   
