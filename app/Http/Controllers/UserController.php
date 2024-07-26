@@ -90,10 +90,6 @@ class UserController extends Controller
     }
 
     public function logout(Request $request) {
-        if(!$request->user()->currentAccessToken()) {
-            return response()->json(['message' => 'ga ada token bejir'], 401);
-        }   
-
         $request->user()->currentAccessToken()->delete();
 
         return response()->json(['message' => 'logout berhasil'], 200);
