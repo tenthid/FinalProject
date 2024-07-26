@@ -104,7 +104,7 @@ class UserController extends Controller
         return response()->json([
             $request
         ]);
-    }
+    }   
 
     public function forgotPassword(Request $request)
     {   
@@ -136,7 +136,6 @@ class UserController extends Controller
 
     public function resetPassword(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'email' => 'required|email',
             'password' => 'required|min:6|confirmed',
