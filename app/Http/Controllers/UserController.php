@@ -11,6 +11,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Auth\Events\PasswordReset;
+use App\Models\PasswordResetToken;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
@@ -123,6 +124,24 @@ class UserController extends Controller
         } else {
             return response()->json(['message' => __($status)], 400);
         }
+    }
+
+    public function verifyToken(Request $request) {
+        $validateData = Validator::make($request->all(), [
+            'token' => 'required'
+        ],[
+            'token.required' => 'token wajib diisi'
+        ]);
+
+        $token = $request->input('token');
+
+        $resetToken = PasswordResetToken::where('token', $token)->get();
+
+        if(count($resetToken) === 0) {
+            return response()->json(['message' => 'token tidak valid/ tidak ada', 'redirect' => false]);
+        }
+
+        return response()->json(['message' => 'token valid', 'redirect' => true]);
     }
 
     public function resetPassword(Request $request)
