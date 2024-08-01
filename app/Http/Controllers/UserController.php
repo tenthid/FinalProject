@@ -43,6 +43,8 @@ class UserController extends Controller
             'password' => Hash::make($request->password)
         ]);
 
+        User::query();
+
         return response()->json(['message' => 'Register berhasil'], 201);
     }
 

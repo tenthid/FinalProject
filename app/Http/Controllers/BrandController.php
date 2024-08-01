@@ -87,9 +87,7 @@ class BrandController extends Controller
             ], 404);
         }
 
-        $products = $brand->products()->get();
-
         $brand->delete();
-        return response()->json(['message' => "Brand : $brand->brand_name Berhasil dihapus", 'product_init' => $products], 200);
+        return response()->json(['message' => "Brand : $brand->brand_name Berhasil dihapus"], 200);
     }
 }

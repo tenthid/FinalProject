@@ -87,9 +87,7 @@ class CategoryController extends Controller
             ], 404);
         }
 
-        $products = $category->products()->get();
-
         $category->delete();
-        return response()->json(['message' => "Category : $category->category_name Berhasil dihapus", 'product_init' => $products], 200);
+        return response()->json(['message' => "Category : $category->category_name Berhasil dihapus"], 200);
     }
 }
