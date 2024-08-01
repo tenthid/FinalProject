@@ -32,7 +32,7 @@ class StoreProductRequest extends FormRequest
         ];
     }
 
-    public function messages(): array {
+    public function messages() {
         return [
             'product_name.required' => 'wajib ada, harus berupa teks string, panjang maksimal adalah 50 karakter',
             'price.required' => 'wajib ada',

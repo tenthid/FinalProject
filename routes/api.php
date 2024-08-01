@@ -39,12 +39,12 @@ Route::get('/brands', [BrandController::class, 'index'])->name('brands.index');
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
 
     
-Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
 // route  group protected by auth sanctum
 Route::middleware('auth:sanctum')->group(function () {
     
     // product routes
     Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+    Route::put('/products/{id}', [ProductController::class, 'update'])->name('products.update');
     Route::delete('/products/{id}', [ProductController::class, 'destroy'])->name('products.destroy');
 
     // brand routes
