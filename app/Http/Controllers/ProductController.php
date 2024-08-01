@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use Illuminate\Support\Facades\Validator;
@@ -59,33 +60,12 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        $validateData = Validator::make($request->all(),[
-            'product_name' => 'required',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'brand_id' => 'required|integer',
-            'category_id' => 'required|integer',
-        ],
-        [ 
-            'product_name.required' => 'wajib ada, harus berupa teks string, panjang maksimal adalah 50 karakter',
-            'price.required' => 'wajib ada',
-            'price.numeric' => 'Harga harus berupa angka.',
-            'stock.required' => 'wajib ada',
-            'stock.integer' => 'Stok harus berupa bilangan bulat.',
-            'brand_id.required' => 'wajib ada',
-            'brand_id.integer' => 'Id dari brand harus berupa bilangan bulat.',
-            'category_id.required' => 'wajib ada',
-            'category_id.integer' => 'Id dari category harus berupa bilangan bulat.',
-        ]);
+        $validatedData = $request->validated();
 
-        if ($validateData->fails()) {
-            return response()->json(['errors' => $validateData->errors()], 422);
-        } 
-        
-        Product::create($validateData->validated());
-        return response()->json(['message' => 'Produk berhasil disimpan'], 201);
+        Product::create($validatedData);
+        return response()->json(['message' => 'Produk berhasil disimpan',], 201);
     }
 
     /**
@@ -107,7 +87,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreProductRequest $request, string $id)
     {
         $product = Product::find($id);
 
@@ -117,30 +97,8 @@ class ProductController extends Controller
             ], 404);
         }
 
-        $validateData = Validator::make($request->all(),[
-            'product_name' => 'required',
-            'price' => 'required|numeric',
-            'stock' => 'required|integer',
-            'brand_id' => 'required|integer',
-            'category_id' => 'required|integer',
-        ],
-        [ 
-            'product_name.required' => 'wajib ada, harus berupa teks string, panjang maksimal adalah 50 karakter',
-            'price.required' => 'wajib ada',
-            'price.numeric' => 'Harga harus berupa angka.',
-            'stock.required' => 'wajib ada',
-            'stock.integer' => 'Stok harus berupa bilangan bulat.',
-            'brand_id.required' => 'wajib ada',
-            'brand_id.integer' => 'Id dari brand harus berupa bilangan bulat.',
-            'category_id.required' => 'wajib ada',
-            'category_id.integer' => 'Id dari category harus berupa bilangan bulat.',
-        ]);
-
-        if ($validateData->fails()) {
-            return response()->json(['errors' => $validateData->errors()], 422);
-        } 
-
-        $product->update($validateData->validated());
+        $validatedData = $request->validated();
+        $product->update($validatedData);
         return response()->json(['message' => 'Produk berhasil diupdate'], 200);
     }
 

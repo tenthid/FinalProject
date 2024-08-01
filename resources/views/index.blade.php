@@ -11,9 +11,12 @@
         <h1 style="color: white;">Ngapain hayoo</h1>
         <div style="height: 60%; width: 80%;">
             <video width="100%" height="100%" controls poster="https://cdn.discordapp.com/attachments/1190600991268163625/1268024142108561447/Screenshot_2024-01-31_230814.png?ex=66aaeb02&is=66a99982&hm=241403589252237613f44511cd7b9ffa141436e28ffeddd52fe1d75e07b71d0e&" autoplay>
-                <source src="https://cdn.videy.co/94DGK4lx.mp4" type="video/mp4" >
+                <source src="{{ url('https://cdn.videy.co/94DGK4lx.mp4') }}" type="video/mp4" >
             </video>
+            <p style="display:none">
+                ngapain inspect hayoooo???
+            </p>
         </div>
     </div>
 </body>
-</html> 
+</html>     

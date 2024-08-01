@@ -20,12 +20,13 @@ class UserController extends Controller
     public function register(Request $request) {
         $validateData = Validator::make($request->all(),[
             'name' => 'required',
-            'email' => 'required | email',
+            'email' => 'required | email | unique:users,email',
             'password' => 'required | confirmed | min:6'
         ],
         [ 
             'name.required' => 'wajib ada',
             'email.required' => 'wajib ada',
+            'email.unique' => "email $request->email sudah ada, gunakan email lain",
             'email.email' => 'email harus berformat email',
             'password.required' => 'wajib ada',
             'password.confirmed' => 'password konfirmasi tidak sama',
@@ -34,35 +35,26 @@ class UserController extends Controller
 
         if ($validateData->fails()) {
             return response()->json(['errors' => $validateData->errors()], 422);
-        } 
-
-        $isEmailExist = User::where('email', $request->email)->exists();
-        
-        if(!$isEmailExist) {
-            User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password)
-            ]);
-
-            return response()->json(['message' => 'Register berhasil'], 201);
         }
 
-        return response()->json(['message' => "Email $request->email sudah dipakai, register menggunakan email lain!"]);
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+
+        return response()->json(['message' => 'Register berhasil'], 201);
     }
 
     public function login (Request $request) {
         $validateData = Validator::make($request->all(),[
             'email' => 'required | email',
             'password' => 'required',
-            // 'remember' => 'required|boolean'
         ],
         [ 
             'email.required' => 'wajib ada',
             'email.email' => 'email harus berformat email',
             'password.required' => 'wajib ada',
-            // 'remember.required' => 'wajib ada',
-            // 'remember.boolean' => 'harus bernilai 1 atau 0',
         ]);
 
         if ($validateData->fails()) {
